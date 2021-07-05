@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nunt OS</title>
+        <style>
+            .container {
+                background-color: #121212;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                color: #FFFFFF;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                user-select: none;
+            }
+            .logo {
+                background: linear-gradient(to right, #40e0d0 , #98fb98);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-family: sans-serif;
+                font-weight: 800;
+                font-size: 125px;
+            }
+            .boot-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                opacity: 0;
+            }
+            .loader {
+                display: inline-block;
+                position: relative;
+                width: 80px;
+                height: 80px;
+                margin-left: 30px;
+                margin-top: 52.5px;
+            }
+            .loader div {
+                box-sizing: border-box;
+                display: block;
+                position: absolute;
+                width: 64px;
+                height: 64px;
+                margin: 8px;
+                border: 3px solid #fff;
+                border-radius: 50%;
+                animation: loading 1.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                border-color: #fff transparent transparent transparent;
+            }
+            .loader div:nth-child(3) {
+                animation-delay: -0.15s;
+            }
+            .login-container {
+                background-image: linear-gradient(to right, #40e0d0 , #98fb98);
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                opacity: 0;
+            }
+            .login {
+                background-color: #FFFFFF;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin-top: 20vh;
+                margin-bottom: 20vh;
+                margin-left: 10vh;
+                margin-right: 10vh;
+                border-radius: 20px;
+                animation: float 3s infinite;
+            }
+            @keyframes float {
+                0% {
+                    box-shadow: 0px 0px 7.5px #121212;
+                }
+                50% {
+                    box-shadow: 0px 0px 3.75px #121212;
+                }
+                100% {
+                    box-shadow: 0px 0px 7.5px #121212;
+                }
+            }
+            @keyframes loading {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes opacity-on {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            @keyframes opacity-off {
+                0% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+    <body onload="new OS().boot()">
+        <div class="container"></div>
+    </body>
+    <script>
+        class OS {
+            boot() {
+                var container = document.getElementsByClassName("container")[0]
+                var logo = document.createElement("span")
+                var boot_container = document.createElement("div")
+                var loader = document.createElement("div")
+                container.innerHTML = ""
+                logo.className = "logo"
+                logo.textContent = "N"
+                boot_container.className = "boot-container"
+                loader.className = "loader"
+                for (var i in [1, 2, 3, 4]) {
+                    i = [1, 2, 3, 4][i]
+                    loader.appendChild(document.createElement("div"))
+                }
+                boot_container.appendChild(logo)
+                boot_container.appendChild(loader)
+                container.appendChild(boot_container)
+                setTimeout(function() {
+                    boot_container.style.animation = "opacity-on 1s"
+                    boot_container.style.opacity = 1
+                    setTimeout(function() {
+                        setTimeout(function() {
+                            boot_container.style.animation = "opacity-off 1s"
+                            boot_container.style.opacity = 0
+                            setTimeout(function() {
+                                new OS().login()
+                            }, 1000)
+                        }, 2000)
+                    }, 1000)
+                }, 1000)
+            }
+            login() {
+                var container = document.getElementsByClassName("container")[0]
+                var login_container = document.createElement("div")
+                var login = document.createElement("div")
+                container.innerHTML = ""
+                login_container.className = "login-container"
+                login.className = "login"
+                login_container.appendChild(login)
+                container.appendChild(login_container)
+                setTimeout(function() {
+                    login_container.style.animation = "opacity-on 1s"
+                    login_container.style.opacity = 1
+                }, 500)
+            }
+        }
+    </script>
+</html>
